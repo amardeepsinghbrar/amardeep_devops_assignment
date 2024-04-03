@@ -92,3 +92,20 @@ variable "eks_cluster_version" {
     type = string
     description = "eks_cluster_version"
 }
+#jenkins
+variable "jenkins_ec2_instance_name"{
+    type = string
+    description = "jenkins_ec2_instance_name" 
+}
+variable "jenkins_ec2_security_group_name" {
+    type = string
+    description = "jenkins_ec2_security_group_name" 
+}
+variable "jenkins_ec2_instance_type" {
+    type = string
+    description = "jenkins_ec2_instance_type" 
+}
+variable "jenkins_ec2_associate_public_ip_address" {
+    type = string
+    description = "jenkins_ec2_associate_public_ip_address" 
+}

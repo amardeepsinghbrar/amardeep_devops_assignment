@@ -25,7 +25,7 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-    instance_types = ["t2.micro","t3.medium"]
+    instance_types = ["t2.micro"]
   }
 
   cluster_security_group_id = aws_security_group.eks_cluster_security_group.id

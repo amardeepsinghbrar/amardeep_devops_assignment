@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'GIT_BRANCH', description: 'Git branch to build')
+        string(name: 'COMMIT_ID', description: 'Commit ID to use for checking out the code')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Clean workspace before checkout
+                    deleteDir()
+
+                    // Fetch the code from the specified Git branch and commit ID
+                    checkout([$class: 'GitSCM', branches: [[name: "${params.GIT_BRANCH}", commitId: "${params.COMMIT_ID}"]], userRemoteConfigs: [[url: 'https://github.com/amardeepsinghbrar/spring-petclinic']]])
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    docker.build("amardeepsinghbrar/spring-petclinic:${params.COMMIT_ID}", '.')
+
+                    // Tag the Docker image with the commit ID
+                    docker.image("amardeepsinghbrar/spring-petclinic:${params.COMMIT_ID}").push()
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                        // Push the Docker image to Docker Hub
+                        docker.image("amardeepsinghbrar/spring-petclinic:${params.COMMIT_ID}").push()
+                    }
+                }
+            }
+        }
+    }
+}

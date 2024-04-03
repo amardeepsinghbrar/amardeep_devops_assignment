@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'COMMIT_ID', description: 'Commit ID to use for the Docker image')
+    }
+
+    stages {
+        stage('Checkout Helm Chart') {
+            steps {
+                script {
+                    // Clean workspace before checkout
+                    deleteDir()
+
+                    // Checkout the Helm chart repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/amardeepsinghbrar/amardeep_devops_assignment']]])
+
+                    // Move to the directory containing the Helm chart
+                    dir('helm_charts/springboot-pets') {
+                        // Print out the content of the Helm chart directory
+                        sh 'ls -la'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Helm Chart') {
+            steps {
+                script {
+                    // Deploy the Helm chart to Kubernetes
+                    dir('helm_charts/springboot-pets') {
+                        // Install Helm chart with the specified Docker image tag
+                        sh "helm install springboot-pets --set image.tag=${params.COMMIT_ID} ."
+                    }
+                }
+            }
+        }
+    }
+}
