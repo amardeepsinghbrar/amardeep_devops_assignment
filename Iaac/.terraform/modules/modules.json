@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"my_codepipeline","Source":"./modules/codepipeline","Dir":"modules/codepipeline"},{"Key":"my_ecr","Source":"./modules/ecr","Dir":"modules/ecr"}]}
