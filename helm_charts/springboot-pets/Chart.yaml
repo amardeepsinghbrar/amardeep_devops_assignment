@@ -1,0 +1,5 @@
+# Chart.yaml
+apiVersion: v2
+name: pets-chart
+description: A Helm chart to deploy a Docker image
+version: 0.1.0

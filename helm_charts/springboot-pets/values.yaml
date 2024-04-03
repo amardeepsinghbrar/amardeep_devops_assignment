@@ -1,0 +1,4 @@
+# values.yaml
+image:
+  repository: my-docker-image
+  tag: latest

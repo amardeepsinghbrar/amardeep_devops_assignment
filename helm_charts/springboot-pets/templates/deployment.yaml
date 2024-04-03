@@ -1,0 +1,66 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pets-chart.fullname" . }}
+  labels:
+    app: {{ include "pets-chart.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "pets-chart.name" . }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ include "pets-chart.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 80
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - name: http
+          containerPort: 3000
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 1001
+        imagePullPolicy: IfNotPresent
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "500Mi"
+          requests:
+            cpu: "20m"
+            memory: "150Mi"
