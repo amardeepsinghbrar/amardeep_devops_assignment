@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'GIT_BRANCH', description: 'Git branch to build')
+        string(name: 'GIT_BRANCH',defaultValue: "main", description: 'Git branch to build')
         string(name: 'COMMIT_ID', description: 'Commit ID to use for checking out the code')
     }
     environment{
@@ -17,7 +17,7 @@ pipeline {
                     deleteDir()
 
                     // Fetch the code from the specified Git branch and commit ID
-                    checkout([$class: 'GitSCM', branches: [[name: "${params.GIT_BRANCH}"]], userRemoteConfigs: [[url: ${REPO_URL}]]])
+                    checkout([$class: 'GitSCM', branches: [[name: ${params.GIT_BRANCH}]], userRemoteConfigs: [[url: ${env.REPO_URL}]]])
                     //checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: ${REPO_URL}, credentialsId: credential]], branches: [[name: ${params.GIT_BRANCH}]]],poll: false
                 }
             }
