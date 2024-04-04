@@ -28,8 +28,10 @@ provider "aws" {
 }
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.cluster.endpoint
+    host                   = data.terraform_remote_state.eks_remote_state.outputs.cluster_endpoint
     token                  = data.aws_eks_cluster_auth.cluster.token
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+    cluster_ca_certificate = base64decode(data.terraform_remote_state.eks_remote_state.outputs.cluster_certificate_authority_data)
   }
 }
+
+ 
