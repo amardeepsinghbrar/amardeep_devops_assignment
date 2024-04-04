@@ -1,7 +1,7 @@
 
 module "my_vpc" {
   # Creating VPC with 2 public and 2 private subnets. 
-  source                             = "./modules/vpc"
+  source                             = "../modules/vpc"
   vpc_name                           = var.vpc_name
   vpc_cidr                           = var.vpc_cidr
   az1                                = var.az1
@@ -11,10 +11,5 @@ module "my_vpc" {
   cidr_private_subnet1               = var.cidr_private_subnet1
   cidr_private_subnet2               = var.cidr_private_subnet2
   tags                               = var.tags
-
-  profile                            = var.profile
-  dynamodynamodb_table               = var.dynamodynamodb_table
-  s3_terraform_state_store_bucket    = var.s3_terraform_state_store_bucket
   environment                        = var.environment
-  region                             = var.region
 }
