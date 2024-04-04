@@ -2,7 +2,7 @@ output "vpc_id" {
     value =  module.my_vpc.vpc_id
 }
 output "vpc_name" {
-    value =  module.my_vpc.tags["Name"]
+    value =  module.my_vpc.vpc_name
 }
 output "vpc_cidr" {
     value =  module.my_vpc.vpc_cidr
