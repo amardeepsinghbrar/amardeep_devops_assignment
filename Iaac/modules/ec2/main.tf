@@ -7,8 +7,8 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 resource "aws_instance" "ec2-instance" {
   ami             = data.aws_ami.amazon_linux_ami.id
   instance_type   = var.ec2_instance_type
-  key_name        = aws_key_pair.aws_ec2_keypair.key_name
-  vpc_security_group_ids = [aws_security_group.network-security-group.id]
+  key_name        = data.aws_key_pair.aws_ec2_keypair
+  vpc_security_group_ids = [aws_security_group.jenkins_ec2_security_group.id]
   tags = merge(
     var.tags,
     {
