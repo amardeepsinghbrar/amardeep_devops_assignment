@@ -29,25 +29,25 @@ pipeline {
             steps {
                 script {
                     def commitId = env.GIT_COMMIT
-                    echo 'Commit ID: ${commitId}'
+                    echo "${commitId}"
                     def commitId2 = sh(script: 'git log -1 --pretty=format:%h', returnStdout: true).trim()
-                    echo 'Commit ID2: ${commitId2}'
+                    echo "${commitId2}"
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    echo 'Building Docker image...'
-                    //sh "docker build -t petclinic:${COMMIT_ID} ."
-                    //echo 'Tagging Docker image from petclinic:${COMMIT_ID} to amardeepsingh01/petclinic:${COMMIT_ID}'
-                    //sh "docker tag petclinic:${COMMIT_ID} amardeepsingh01/petclinic:${COMMIT_ID}"
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             echo 'Building Docker image...'
+        //             //sh "docker build -t petclinic:${COMMIT_ID} ."
+        //             //echo 'Tagging Docker image from petclinic:${COMMIT_ID} to amardeepsingh01/petclinic:${COMMIT_ID}'
+        //             //sh "docker tag petclinic:${COMMIT_ID} amardeepsingh01/petclinic:${COMMIT_ID}"
 
-                    dockerImage = docker.build registry + ":$COMMIT_ID"
+        //             dockerImage = docker.build registry + ":$COMMIT_ID"
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         // stage('Print Credentials') {
         //     steps {
         //         script {
@@ -60,27 +60,27 @@ pipeline {
         //     }
         // }
   
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    //echo 'Login to docker hub'
-                    def registryCredential = 'dockerhub_id'
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         script {
+        //             //echo 'Login to docker hub'
+        //             def registryCredential = 'dockerhub_id'
 
-                    //echo 'Pushing the image amardeepsingh01/petclinic:${COMMIT_ID}'
-                    //sh "docker push amardeepsingh01/petclinic:${COMMIT_ID}"
-                    docker.withRegistry( '', registryCredential ) { dockerImage.push()}
-                }
-            }
-        }
-        stage('Removing image from local') {
-            steps {
-                script {
-                    echo 'Removing local copies of images'
-                    //sh "docker rmi petclinic${COMMIT_ID}"
-                    //sh "docker rmi amardeepsingh01/petclinic:${COMMIT_ID}"
-                    sh "docker rmi $registry:$COMMIT_ID"
-                }
-            }
-        }
+        //             //echo 'Pushing the image amardeepsingh01/petclinic:${COMMIT_ID}'
+        //             //sh "docker push amardeepsingh01/petclinic:${COMMIT_ID}"
+        //             docker.withRegistry( '', registryCredential ) { dockerImage.push()}
+        //         }
+        //     }
+        // }
+        // stage('Removing image from local') {
+        //     steps {
+        //         script {
+        //             echo 'Removing local copies of images'
+        //             //sh "docker rmi petclinic${COMMIT_ID}"
+        //             //sh "docker rmi amardeepsingh01/petclinic:${COMMIT_ID}"
+        //             sh "docker rmi $registry:$COMMIT_ID"
+        //         }
+        //     }
+        // }
     }
 }
