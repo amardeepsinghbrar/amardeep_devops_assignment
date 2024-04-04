@@ -35,7 +35,6 @@ pipeline {
                     sh "aws eks --region ${env.AWS_REGION} update-kubeconfig --name ${env.EKS_NAME}"
                     sh "echo $PATH"
                     sh "ls -ltr /usr/local/bin/"
-                    sh "which kubectl"
                     sh "which helm"
                 }
             }
