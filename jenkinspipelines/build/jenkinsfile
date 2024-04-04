@@ -39,16 +39,29 @@ pipeline {
                 }
             }
         }
-
+        stages {
+            stage('Print Credentials') {
+                steps {
+                    script {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            echo "Username: ${USERNAME}"
+                            // You can print the password if necessary, but it's generally not recommended
+                            echo "Password: ${PASSWORD}"
+                        }
+                    }
+                }
+            }
+        }
         stage('Push to Docker Hub') {
             steps {
                 script {
                     //echo 'Login to docker hub'
-                    registryCredential = 'dockerhub_id'
+                    def registryCredential = 'dockerhub_id'
 
                     //echo 'Pushing the image amardeepsingh01/petclinic:${COMMIT_ID}'
                     //sh "docker push amardeepsingh01/petclinic:${COMMIT_ID}"
-                    docker.withRegistry( '', 'dockerhub_id' ) { dockerImage.push()}
+                    docker.withRegistry( '', registryCredential ) { dockerImage.push()}
+                }
             }
         }
         stage('Removing image from local') {
