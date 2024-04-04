@@ -8,8 +8,6 @@ pipeline {
     environment{
         REPO_URL = "https://github.com/amardeepsinghbrar/spring-petclinic"
         registry = "amardeepsingh01/petclinic"
-        registryCredential = 'dockerhub_id'
-
     }
 
     stages {
@@ -39,17 +37,17 @@ pipeline {
                 }
             }
         }
-        stage('Print Credentials') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        echo "Username: ${USERNAME}"
-                        // You can print the password if necessary, but it's generally not recommended
-                        echo "Password: ${PASSWORD}"
-                    }
-                }
-            }
-        }
+        // stage('Print Credentials') {
+        //     steps {
+        //         script {
+        //             withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        //                 echo "Username: ${USERNAME}"
+        //                 // You can print the password if necessary, but it's generally not recommended
+        //                 echo "Password: ${PASSWORD}"
+        //             }
+        //         }
+        //     }
+        // }
   
         stage('Push to Docker Hub') {
             steps {
@@ -69,7 +67,7 @@ pipeline {
                     echo 'Removing local copies of images'
                     //sh "docker rmi petclinic${COMMIT_ID}"
                     //sh "docker rmi amardeepsingh01/petclinic:${COMMIT_ID}"
-                    sh "docker rmi $registry:$BUILD_NUMBER"
+                    sh "docker rmi $registry:$COMMIT_ID"
                 }
             }
         }
