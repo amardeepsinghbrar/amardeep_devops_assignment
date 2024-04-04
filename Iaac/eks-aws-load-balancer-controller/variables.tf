@@ -6,3 +6,7 @@ variable "region" {
     type            = string
     description     = "Region"
 }
+variable "profile" {
+    type            = string
+    description     = "profile"
+}
