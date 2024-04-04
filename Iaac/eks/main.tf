@@ -6,6 +6,6 @@ module "eks_cluster" {
   eks_cluster_version               = var.eks_cluster_version
   cidr_private_subnet1_id           = data.terraform_remote_state.vpc_remote_state.outputs.private_subnet1
   cidr_private_subnet2_id           = data.terraform_remote_state.vpc_remote_state.outputs.private_subnet2
-  iam_role_to_be_whitelisted        = data.terraform_remote_state.jenkins_remote_state.outputs.iam_role_to_be_whitelisted
+  iam_role_to_be_whitelisted        = data.terraform_remote_state.jenkins_remote_state.outputs.ec2_iam_role
   tags                              = var.tags
 }
