@@ -10,6 +10,14 @@ resource "aws_security_group" "jenkins_ec2_security_group" {
         protocol                = "tcp"
         cidr_blocks             = ["0.0.0.0/0"]
     }
+
+    ingress  {
+        description             = "HTTP port 8080 from Anywhere"
+        from_port               = 8080
+        to_port                 = 8080
+        protocol                = "tcp"
+        cidr_blocks             = ["0.0.0.0/0"]
+    }
     ingress  {
         description             = "HTTP port 443 from VPC"
         from_port               = 443

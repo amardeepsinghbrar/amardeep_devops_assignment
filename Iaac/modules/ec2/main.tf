@@ -29,15 +29,10 @@ resource "aws_instance" "ec2-instance" {
 # Update the package lists
 yum update -y
 
-# Install Jenkins
-wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
-rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
-yum install jenkins -y
-service jenkins start
-
 # Install Docker
 amazon-linux-extras install docker -y
-service docker start
+systemctl enable docker
+systemctl start docker
 
 # Add the ec2-user to the docker group
 usermod -a -G docker ec2-user
@@ -52,6 +47,16 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$P
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
+
+# install java17
+yum  install java-17-amazon-corretto -y
+
+# install jenkins
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+yum install jenkins -y
+systemctl enable jenkins
+systemctl start jenkins
 
 
 EOF
