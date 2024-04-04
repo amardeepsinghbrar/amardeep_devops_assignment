@@ -1,4 +1,7 @@
 # values.yaml
 image:
-  repository: my-docker-image
+  repository: amardeepsingh01/petclinic
   tag: latest
+namespace: default
+public-subnet1: default
+public-subnet2: default

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "pets-chart.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/subnets: {{ .Values.public-subnet1 }}, {{ .Values.public-subnet2 }}
+    kubernetes.io/ingress.class: alb
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "pets-chart.fullname" . }}
+            port:
+              number: 80
+        path: /*
+        pathType: ImplementationSpecific

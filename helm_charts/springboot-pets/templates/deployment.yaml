@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "pets-chart.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "pets-chart.name" . }}
 spec:

@@ -1,0 +1,18 @@
+# templates/servicefile.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pets-chart.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "pets-chart.name" . }}
+spec:
+  ports:
+  - name: http
+    nodePort: 31338
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: {{ include "pets-chart.name" . }}
+  type: NodePort

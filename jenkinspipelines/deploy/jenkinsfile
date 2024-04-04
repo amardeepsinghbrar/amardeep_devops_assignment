@@ -2,9 +2,75 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'COMMIT_ID', description: 'Commit ID to use for the Docker image')
+        string(name: 'GIT_BRANCH',defaultValue: "main", description: 'Git branch to build')
+    }
+    environment{
+        REPO_URL = "https://github.com/amardeepsinghbrar/spring-petclinic"
+        registry = "amardeepsingh01/petclinic"
     }
 
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Clean workspace before checkout
+                    deleteDir()
+                    
+                    // Fetch the code from the specified Git branch and commit ID
+                    checkout([$class: 'GitSCM', branches: [[name: "${params.GIT_BRANCH}"]], userRemoteConfigs: [[url: "${env.REPO_URL}"]]])
+
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo 'Building Docker image...'
+                    //sh "docker build -t petclinic:${COMMIT_ID} ."
+                    //echo 'Tagging Docker image from petclinic:${COMMIT_ID} to amardeepsingh01/petclinic:${COMMIT_ID}'
+                    //sh "docker tag petclinic:${COMMIT_ID} amardeepsingh01/petclinic:${COMMIT_ID}"
+                    def COMMIT_ID = sh(script: 'git log -1 --pretty=format:%h', returnStdout: true).trim()
+                    dockerImage = docker.build registry + ":$COMMIT_ID"
+
+                }
+            }
+        }
+  
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    def registryCredential = 'dockerhub_id'
+                    docker.withRegistry( '', registryCredential ) { dockerImage.push()}
+                }
+            }
+        }
+        stage('Removing image from local') {
+            steps {
+                script {
+                    echo 'Removing local copies of images'
+                    def COMMIT_ID = sh(script: 'git log -1 --pretty=format:%h', returnStdout: true).trim()
+                    sh "docker rmi $registry:$COMMIT_ID"
+                }
+            }
+        }
+    }
+}
+
+===========================================
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'COMMIT_ID', description: 'Commit ID to use for the Docker image')
+    }
+    environment{
+        REPO_URL  = "https://github.com/amardeepsinghbrar/amardeep_devops_assignment"
+        registry   = "amardeepsingh01/petclinic"
+        AWS_REGION = "us-east-1"
+        EKS_NAME   = "prod-eks"
+
+    }
     stages {
         stage('Checkout Helm Chart') {
             steps {
@@ -12,9 +78,8 @@ pipeline {
                     // Clean workspace before checkout
                     deleteDir()
 
-                    // Checkout the Helm chart repository
-                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/amardeepsinghbrar/amardeep_devops_assignment']]])
-
+                    checkout([$class: 'GitSCM', branches: [[name: "*/main"]], userRemoteConfigs: [[url: "${env.REPO_URL}"]]])
+                    
                     // Move to the directory containing the Helm chart
                     dir('helm_charts/springboot-pets') {
                         // Print out the content of the Helm chart directory
@@ -23,7 +88,14 @@ pipeline {
                 }
             }
         }
-
+        stage('Connect to kubernetes') {
+            steps {
+                script {
+                    // Deploy the Helm chart to Kubernetes
+                    sh "aws eks --region ${env.AWS_REGION} update-kubeconfig --name ${env.EKS_NAME}"
+                }
+            }
+        }
         stage('Deploy Helm Chart') {
             steps {
                 script {

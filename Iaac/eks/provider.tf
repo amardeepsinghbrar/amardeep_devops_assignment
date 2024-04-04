@@ -1,9 +1,9 @@
 terraform {
     backend "s3" {
         bucket                      = "mys3bucket-terraform"
-        key                         = "${var.environment}/eks/terraform.tfstate"
+        key                         = "pets/eks/terraform.tfstate"
         dynamodb_table              = "terraform-lock"
-        region = "us-east-1"   
+        region                      = "us-east-1"   
         }
 
     required_providers {
@@ -23,7 +23,7 @@ terraform {
   }
 
 provider "aws" {
-  region  = var.region
+  region  = "us-east-1" 
   profile = "default"
 }
 provider "helm" {
