@@ -1,51 +1,14 @@
-variable "vpc_name" {
+variable "eks_cluster_name" {
     type = string
-    description = "VPC Name"
+    description = "eks_cluster_name"
 }
-variable "vpc_cidr" {
+variable "eks_cluster_version" {
     type = string
-    description = "CIDR block for VPC"
-}
-variable "az1" {
-    type = string
-    description = "AZ1 name"
-}
-variable "az2" {
-    type = string
-    description = "AZ2 name"
-}
-variable "cidr_public_subnet1" {
-    type = string
-    description = "cidr_public_subnet1"
-}
-variable "cidr_public_subnet2" {
-    type = string
-    description = "cidr_public_subnet2"
-}
-variable "cidr_private_subnet1" {
-    type = string
-    description = "cidr_private_subnet1"
-}
-variable "cidr_private_subnet2" {
-    type = string
-    description = "cidr_private_subnet2"
+    description = "eks_cluster_version"
 }
 variable "tags" {
     type = map(string)
     description = "tags"
-}
-variable "ecr_name" {
-    type = string
-    description = "Name of ECR"
-}
-variable "ecr_tag_mutability_setting" {
-    type = string
-    description = "The tag mutability setting for the repository"
-}
-variable "ecr_scan_on_push" {
-    type = bool
-    default = false
-    description = "The tag mutability setting for the repository"
 }
 variable "region" {
     type            = string
@@ -55,15 +18,5 @@ variable "profile" {
     type            = string
     description     = "profile"
 }
-variable "environment" {
-    type = string
-    description = "environment"
-}
-variable "eks_cluster_name" {
-    type = string
-    description = "eks_cluster_name"
-}
-variable "eks_cluster_version" {
-    type = string
-    description = "eks_cluster_version"
-}
+
+
