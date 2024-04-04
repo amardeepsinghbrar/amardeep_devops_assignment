@@ -1,9 +1,9 @@
 terraform {
     backend "s3" {
         bucket                      = "mys3bucket-terraform"
-        key                         = "${var.environment}/jenkins/terraform.tfstate"
+        key                         = "pets/jenkins/terraform.tfstate"
         dynamodb_table              = "terraform-lock"
-        region                      = var.region
+        region                      = "us-east-1"
         }
 
     required_providers {
@@ -15,6 +15,6 @@ terraform {
   }
 
 provider "aws" {
-  region  = var.region
+  region  = "us-east-1"
   profile = "default"
 }
