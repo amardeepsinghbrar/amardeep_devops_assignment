@@ -29,6 +29,9 @@ resource "aws_instance" "ec2-instance" {
 # Update the package lists
 yum update -y
 
+#install git
+yum install git -y
+
 # Install Docker
 amazon-linux-extras install docker -y
 systemctl enable docker
