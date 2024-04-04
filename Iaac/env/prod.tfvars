@@ -1,8 +1,9 @@
 # ----------------------Common-----------------------
-  profile = "default"
-  dynamodynamodb_table = "terraform-lock"
-  s3_terraform_state_store_bucket = "mys3bucket-terraform"
-  environment = "prod"
+profile = "default"
+dynamodynamodb_table = "terraform-lock"
+s3_terraform_state_store_bucket = "mys3bucket-terraform"
+environment = "prod"
+region = "us-east-1"
 
 # ----------------------VPC-----------------------
 vpc_name                            = "amardeep_vpc"
