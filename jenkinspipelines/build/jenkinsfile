@@ -20,6 +20,11 @@ pipeline {
                     // Fetch the code from the specified Git branch and commit ID
                     checkout([$class: 'GitSCM', branches: [[name: "${params.GIT_BRANCH}"]], userRemoteConfigs: [[url: "${env.REPO_URL}"]]])
                     //checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: ${REPO_URL}, credentialsId: credential]], branches: [[name: ${params.GIT_BRANCH}]]],poll: false
+                                    // Fetch the Git tag
+                    script {
+                        def gitTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+                        echo "Fetched Git tag: ${gitTag}"
+                    }
                 }
             }
         }
