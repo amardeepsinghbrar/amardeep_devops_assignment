@@ -77,6 +77,12 @@ resource "aws_route_table" "public_route_table1" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.my_igw.id
   }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}_public_route_table1"
+    }
+  )
 }
 resource "aws_route_table" "public_route_table2" {
   vpc_id = aws_vpc.my_vpc.id
@@ -85,6 +91,12 @@ resource "aws_route_table" "public_route_table2" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.my_igw.id
   }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}_public_route_table2"
+    }
+  )
 }
 
 # Associate public subnets with the public route table
@@ -120,6 +132,12 @@ resource "aws_route_table" "private_route_table1" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.my_nat_gateway.id
   }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}_private_route_table1"
+    }
+  )
 }
 resource "aws_route_table" "private_route_table2" {
   depends_on = [ aws_nat_gateway.my_nat_gateway ]
@@ -129,6 +147,12 @@ resource "aws_route_table" "private_route_table2" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.my_nat_gateway.id
   }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.vpc_name}_private_route_table2"
+    }
+  )
 }
 
 # Associate private subnets with the private route table
