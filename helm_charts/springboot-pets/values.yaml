@@ -3,5 +3,5 @@ image:
   repository: amardeepsingh01/petclinic
   tag: latest
 namespace: default
-public-subnet1: default
-public-subnet2: default
+public-subnet1: subnet-0d2a45bdb9a4bb847
+public-subnet2: subnet-035651deefc130f6c
