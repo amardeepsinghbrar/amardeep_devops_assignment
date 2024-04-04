@@ -4,6 +4,8 @@ data "aws_key_pair" "aws_ec2_keypair" {
     values = [var.aws_ec2_keypair_name]
   }
 }
+data "aws_caller_identity" "current" {}
+
 data "aws_ami" "amazon_linux_ami" {
   most_recent      = true
   owners           = ["amazon"]
