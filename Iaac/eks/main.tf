@@ -8,12 +8,4 @@ module "eks_cluster" {
   cidr_private_subnet2_id           = data.terraform_remote_state.vpc_remote_state.outputs.private_subnet2
   iam_role_to_be_whitelisted        = data.terraform_remote_state.jenkins_remote_state.outputs.iam_role_to_be_whitelisted
   tags                              = var.tags
-
-}
-module "alb_controller" {
-  source                           = "../modules/aws-load-balancer-controller"
-  cluster_name                     = var.eks_cluster_name
-  cluster_identity_oidc_issuer     = data.aws_eks_cluster.cluster.identity.0.oidc.0.issuer
-  cluster_identity_oidc_issuer_arn = data.aws_iam_openid_connect_provider.oidc_provider.arn
-  aws_region                       = var.region
 }
