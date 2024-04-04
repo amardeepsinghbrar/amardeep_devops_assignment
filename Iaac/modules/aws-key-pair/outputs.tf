@@ -3,7 +3,7 @@ output "aws_ec2_keypair" {
 }
 output "private_key" {
   value     = tls_private_key.example.private_key_pem
-  sensitive = false
+  sensitive = true
 }
 output "public_key" {
   value     = tls_private_key.example.public_key_pem

@@ -8,7 +8,5 @@ output "aws_instance_public_ip" {
 }
 output "private_key" {
   value     = module.aws_key_pair.private_key
-}
-output "public_key" {
-  value     = module.aws_key_pair.public_key
+  sensitive = true
 }
