@@ -6,7 +6,7 @@ environment = "prod"
 region = "us-east-1"
 
 # ----------------------VPC-----------------------
-vpc_name                            = "amardeep_vpc"
+vpc_name                            = "prod_vpc"
 vpc_cidr                            = "172.20.0.0/16"
 az1                                 = "us-east-1a"
 az2                                 = "us-east-1b"
