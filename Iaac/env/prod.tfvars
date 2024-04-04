@@ -31,3 +31,4 @@ jenkins_ec2_security_group_name         = "prod_jenkins_sg"
 jenkins_ec2_instance_type               = "t2.micro"
 jenkins_ec2_associate_public_ip_address = true
 jenkins_root_volume                     = 8
+aws_ec2_keypair_name                    = "pets"
