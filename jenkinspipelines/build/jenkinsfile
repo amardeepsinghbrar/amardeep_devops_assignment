@@ -23,7 +23,7 @@ pipeline {
                                     // Fetch the Git tag
                     script {
                         def gitTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
-                        echo "Fetched Git tag: ${gitTag}"
+                        echo 'Fetched Git tag: ${gitTag}'
                     }
                 }
             }
