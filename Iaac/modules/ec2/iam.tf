@@ -61,12 +61,11 @@ data "aws_iam_policy_document" "jenkins_ec2_iam_policy_document" {
     effect = "Allow"
 
     actions = [
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:CompleteLayerUpload",
-        "ecr:GetAuthorizationToken",
-        "ecr:InitiateLayerUpload",
-        "ecr:PutImage",
-        "ecr:UploadLayerPart"
+      "ssm:UpdateInstanceInformation",
+      "ssmmessages:CreateControlChannel",
+      "ssmmessages:CreateDataChannel",
+      "ssmmessages:OpenControlChannel",
+      "ssmmessages:OpenDataChannel"
     ]
 
     resources = ["*"]
