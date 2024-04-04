@@ -26,8 +26,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker build -t  petclinic:${params.COMMIT_ID} .
-                    docker tag petclinic:${params.COMMIT_ID} amardeepsingh01/petclinic:${params.COMMIT_ID}
+                    docker build -t  petclinic .
+                    docker tag petclinic amardeepsingh01/petclinic:${params.COMMIT_ID}
                     docker push amardeepsingh01/petclinic:${params.COMMIT_ID}
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
         stage('Removing image from local') {
             steps {
                 script {
-                    docker rmi petclinic:${params.COMMIT_ID}
+                    docker rmi petclinic
                     docker rmi amardeepsingh01/petclinic:${params.COMMIT_ID}
                 }
             }
