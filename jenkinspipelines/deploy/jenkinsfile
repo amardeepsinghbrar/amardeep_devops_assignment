@@ -33,6 +33,7 @@ pipeline {
                 script {
                     // Deploy the Helm chart to Kubernetes
                     sh "aws eks --region ${env.AWS_REGION} update-kubeconfig --name ${env.EKS_NAME}"
+                    sh "echo $PATH"
                 }
             }
         }
