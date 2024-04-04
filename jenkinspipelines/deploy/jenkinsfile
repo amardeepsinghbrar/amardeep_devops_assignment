@@ -36,6 +36,7 @@ pipeline {
                     sh "echo $PATH"
                     sh "ls -ltr /usr/local/bin/"
                     sh "which kubectl"
+                    sh "which helm"
                 }
             }
         }
@@ -43,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Deploy the Helm chart to Kubernetes
-                    sh "kubectl get nodes"
+                    sh "/usr/local/bin/kubectl get nodes"
                     // dir('helm_charts/springboot-pets') {
                     //     // Install Helm chart with the specified Docker image tag
                     //     sh "helm install springboot-pets --set image.tag=${params.COMMIT_ID} ."
