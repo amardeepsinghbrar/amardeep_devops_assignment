@@ -19,6 +19,10 @@ resource "aws_instance" "ec2-instance" {
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.id
   associate_public_ip_address = var.associate_public_ip_address
 
+  root_block_device {
+    volume_size = var.jenkins_root_volume
+  }
+
   user_data = <<EOF
 #!/bin/bash
 

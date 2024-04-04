@@ -34,7 +34,23 @@ variable "tags" {
     type = map(string)
     description = "tags"
 }
+variable "profile" {
+    type            = string
+    description     = "profile"
+}
+variable "dynamodynamodb_table" {
+    type = string
+    description = "dynamodynamodb_table"
+}
+variable "s3_terraform_state_store_bucket" {
+    type = string
+    description = "s3_terraform_state_store_bucket"
+}
 variable "environment" {
     type = string
     description = "environment"
+}
+variable "region" {
+    type            = string
+    description     = "Region"
 }

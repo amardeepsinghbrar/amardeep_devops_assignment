@@ -109,3 +109,7 @@ variable "jenkins_ec2_associate_public_ip_address" {
     type = string
     description = "jenkins_ec2_associate_public_ip_address" 
 }
+variable "jenkins_root_volume" {
+    type = string
+    description = "jenkins_root_volume"
+}

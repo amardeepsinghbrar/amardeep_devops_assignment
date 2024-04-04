@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
         bucket                      = "mys3bucket-terraform"
-        key                         = "prod/terraform.tfstate"
+        key                         = "${var.environment}/eks/terraform.tfstate"
         dynamodb_table              = "terraform-lock"
         region = "us-east-1"   
         }
