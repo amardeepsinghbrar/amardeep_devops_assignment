@@ -41,7 +41,7 @@ pipeline {
                     // Deploy the Helm chart to Kubernetes
 
                     dir('helm_charts/pets-chart') {
-                        sh "helm upgrade --install springboot-pets --set image.tag=${params.COMMIT_ID} . --kubeconfig /tmp/config"
+                        sh "helm upgrade --install springboot-pets --set image.tag=${params.COMMIT_ID} ."
                     }
                 }
             }
