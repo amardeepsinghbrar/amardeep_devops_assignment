@@ -37,7 +37,7 @@ pipeline {
                     //sh "ls -ltr /usr/local/bin/"
                     //sh "which helm"
                     sh "whoami"
-                    sh "kubectl get nodes --kubeconfig /home/amardeepsingh/config"
+                    sh "kubectl get nodes --kubeconfig /tmp/config"
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
 
                     dir('helm_charts/springboot-pets') {
                         // Install Helm chart with the specified Docker image tag
-                        sh "helm install springboot-pets --set image.tag=${params.COMMIT_ID} . --kubeconfig /home/amardeepsingh/config"
+                        sh "helm install springboot-pets --set image.tag=${params.COMMIT_ID} . --kubeconfig /tmp/config"
                     }
                 }
             }
