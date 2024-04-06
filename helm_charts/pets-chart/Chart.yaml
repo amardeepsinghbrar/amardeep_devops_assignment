@@ -1,0 +1,5 @@
+# Chart.yaml
+apiVersion: v2
+name: pets-chart
+description: A Helm chart to deploy pets springboot app.
+version: 0.1.0
