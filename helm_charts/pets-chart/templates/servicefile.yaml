@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.appname }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ include "pets-chart.name" . }}
+    app: {{ .Values.appname }}
 spec:
   ports:
   - name: http
