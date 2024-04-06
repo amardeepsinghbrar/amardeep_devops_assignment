@@ -46,7 +46,7 @@ pipeline {
                 script {
                     // Deploy the Helm chart to Kubernetes
 
-                    dir('helm_charts/springboot-pets') {
+                    dir('helm_charts/pets-chart') {
                         // Install Helm chart with the specified Docker image tag
                         sh "helm install springboot-pets --set image.tag=${params.COMMIT_ID} . --kubeconfig /tmp/config"
                     }
