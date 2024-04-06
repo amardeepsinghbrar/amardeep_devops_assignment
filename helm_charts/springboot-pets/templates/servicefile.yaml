@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "pets-chart.fullname" . }}
+  name: {{ include "pets-chart.name" . }}
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "pets-chart.name" . }}
