@@ -2,15 +2,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pets-chart.fullname" . }}
+  name: {{ .Values.appname }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ include "pets-chart.name" . }}
+    app: {{ .Values.appname }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "pets-chart.name" . }}
+      app: {{ .Values.appname }}
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,13 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ include "pets-chart.name" . }}
-    spec:
-      containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          ports:
-            - containerPort: 80
+        app: {{ .Values.appname }}
     spec:
       affinity:
         nodeAffinity:
@@ -38,7 +32,7 @@ spec:
                 - amd64
                 - arm64
       containers:
-      - name: {{ .Chart.Name }}
+      - name: {{ .Values.appname }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - name: http

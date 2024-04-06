@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "pets-chart.name" . }}
+  name: {{ .Values.appname }}
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ include "pets-chart.name" . }}
@@ -14,5 +14,5 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: {{ include "pets-chart.name" . }}
+    app: {{ .Values.appname }}
   type: NodePort

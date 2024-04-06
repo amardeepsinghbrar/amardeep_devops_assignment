@@ -3,5 +3,6 @@ image:
   repository: amardeepsingh01/petclinic
   tag: latest
 namespace: default
+appname: "pets"
 publicsubnet1: "subnet-0d2a45bdb9a4bb847"
 publicsubnet2: "subnet-035651deefc130f6c"
