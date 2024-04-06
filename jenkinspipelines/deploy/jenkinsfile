@@ -31,13 +31,7 @@ pipeline {
         stage('Connect to kubernetes') {
             steps {
                 script {
-                    // Deploy the Helm chart to Kubernetes
-                    //sh "aws eks --region ${env.AWS_REGION} update-kubeconfig --name ${env.EKS_NAME}"
-                    //sh "echo $PATH"
-                    //sh "ls -ltr /usr/local/bin/"
-                    //sh "which helm"
-                    sh "whoami"
-                    sh "kubectl get nodes --kubeconfig /tmp/config"
+                    sh "aws eks --region ${env.AWS_REGION} update-kubeconfig --name ${env.EKS_NAME}"
                 }
             }
         }
@@ -47,7 +41,6 @@ pipeline {
                     // Deploy the Helm chart to Kubernetes
 
                     dir('helm_charts/pets-chart') {
-                        // Install Helm chart with the specified Docker image tag
                         sh "helm upgrade --install springboot-pets --set image.tag=${params.COMMIT_ID} . --kubeconfig /tmp/config"
                     }
                 }
