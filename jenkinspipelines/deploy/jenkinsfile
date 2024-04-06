@@ -36,6 +36,7 @@ pipeline {
                     //sh "echo $PATH"
                     //sh "ls -ltr /usr/local/bin/"
                     //sh "which helm"
+                    sh "whoami"
                     sh "kubectl get nodes --kubeconfig /home/amardeepsingh/config"
                 }
             }
